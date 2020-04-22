@@ -51,4 +51,5 @@ class ApplicationController < Sinatra::Base
     @article.delete
     
     redirect to "/articles"
+  end
 end
