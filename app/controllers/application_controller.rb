@@ -1,4 +1,3 @@
-
 require_relative '../../config/environment'
 
 class ApplicationController < Sinatra::Base
@@ -9,5 +8,34 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
+    redirect to "/articles"
+  end
+  
+  get "/articles/new" do
+    erb :new
+  end
+  
+  get "/articles" do
+    @articles = Article.all
+    erb :index
+  end
+  
+  post "/articles" do
+    new_article = Article.create(title: params["title"], content: params["content"])
+    
+    redirect to "/articles/#{new_article.id}"
+  end
+  
+  get "/articles/:id" do
+    @article = Article.find(params[:id])
+
+    
+    erb :show
+  end
+  
+  get "/articles/:id/edit" do
+    @article = Article.find(params[:id])
+
+    erb :edit
   end
 end
